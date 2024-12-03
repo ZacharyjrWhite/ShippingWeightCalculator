@@ -1,5 +1,5 @@
 function exportTableToCSV() {
-    const table = document.querySelector('shipping_data');
+    const table = document.querySelector('.shipping_data');
     if (!table) {
         console.error('No table found to export.');
         return;

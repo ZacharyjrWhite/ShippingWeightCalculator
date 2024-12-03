@@ -165,3 +165,7 @@ a:hover {
     width: 3rem;
     height: 3rem;
 }
+
+tbody tr:hover td, tbody tr:hover th {
+    background-color: var(--bs-yellow) !important;
+}

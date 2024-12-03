@@ -1,3 +1,5 @@
 import COUNTRY_CODES from './country_codes.js'
+import buildSearchableInput from './dropdown.js'
 
-console.log(COUNTRY_CODES);
+// Initialize the searchable input
+buildSearchableInput(COUNTRY_CODES);

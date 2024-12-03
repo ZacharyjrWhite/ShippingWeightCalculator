@@ -45,7 +45,7 @@ function buildShippingDataTable(data, weightInterval) {
         // Apply rounding if the roundUp checkbox is checked
         if (roundUpCheckbox.checked) {
             rate = Math.round(rate * 2) / 2; // Round to nearest 0.50
-            rate = rate - Math.floor(rate) === 0.49 ? Math.round(rate) - 0.01 : rate; // Adjust to nearest 0.49 or 0.99
+            rate = rate  - 0.01; // Adjust to nearest 0.49 or 0.99
         }
 
         // Create table row
@@ -54,6 +54,8 @@ function buildShippingDataTable(data, weightInterval) {
             <td>${fromPounds} lbs (${fromGrams} g)</td>
             <td>${toPounds} lbs (${toGrams} g)</td>
             <td>$${rate.toFixed(2)}</td>
+            <td>$${baseRate.toFixed(2)}</td>
+            <td>$${Number(rate - baseRate).toFixed(2)}</td>
         `;
 
         // Append row to the table body

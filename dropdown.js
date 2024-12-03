@@ -1,4 +1,4 @@
-import { COUNTRY_CODES } from './country_codes.js';
+import COUNTRY_CODES from './country_codes.js';
 
 function buildSearchableInput() {
     const countryInput = document.getElementById('country');

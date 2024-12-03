@@ -6,7 +6,7 @@ import sendQuoteRequest from './send_request.js';
 document.addEventListener('DOMContentLoaded', () => {
     buildSearchableInput();
 
-    const exportButton = document.querySelector('.btn-primary');
+    const exportButton = document.querySelector('.csvDownload');
     if (exportButton) {
         exportButton.addEventListener('click', exportTableToCSV);
     }

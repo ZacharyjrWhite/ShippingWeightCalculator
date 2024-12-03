@@ -1,1 +1,3 @@
+import COUNTRY_CODES from COUNTRY_CODES.js
+
 console.log(COUNTRY_CODES);

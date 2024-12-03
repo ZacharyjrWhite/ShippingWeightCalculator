@@ -34,7 +34,7 @@ async function sendQuoteRequest() {
         countryCode,
         clientMid: "7d59185c-b629-4885-a5bc-df1296789d86",
         pageNum: 1,
-        pageSize: 2000
+        pageSize: 5000
     };
 
     try {
@@ -50,10 +50,8 @@ async function sendQuoteRequest() {
 
         const data = await response.json();
         console.log("Response Data:", data);
-        alert("Request Successful! Check console for data.");
     } catch (error) {
         console.error("Error sending request:", error);
-        alert("Request failed. Check console for details.");
     }
 }
 

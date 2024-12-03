@@ -34,7 +34,7 @@ async function sendQuoteRequest() {
         countryCode,
         clientMid: "7d59185c-b629-4885-a5bc-df1296789d86",
         pageNum: 1,
-        pageSize: 5000
+        pageSize: 2000
     };
 
     try {
@@ -50,9 +50,34 @@ async function sendQuoteRequest() {
 
         const data = await response.json();
         console.log("Response Data:", data);
+
+        // Populate the shippingLine dropdown
+        populateShippingLineDropdown(data.columns);
+
+        alert("Request Successful! Shipping Line dropdown updated.");
     } catch (error) {
         console.error("Error sending request:", error);
+        alert("Request failed. Check console for details.");
     }
+}
+
+function populateShippingLineDropdown(columns) {
+    const shippingLineSelect = document.getElementById('shippingLine');
+    if (!shippingLineSelect) {
+        console.error("Shipping Line dropdown (#shippingLine) not found in the DOM.");
+        return;
+    }
+
+    // Clear existing options
+    shippingLineSelect.innerHTML = '';
+
+    // Add new options from API response
+    columns.forEach(column => {
+        const option = document.createElement('option');
+        option.textContent = column.title; // Set the visible text
+        option.value = column.field; // Set the underlying value
+        shippingLineSelect.appendChild(option);
+    });
 }
 
 export default sendQuoteRequest;

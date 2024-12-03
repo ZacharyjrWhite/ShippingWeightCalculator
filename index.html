@@ -179,15 +179,20 @@
 
         .table thead th {
             color: var(--bs-yellow);
-            border-bottom: 1px solid var(--bs-dark-border);
+            border-bottom: 2px solid var(--bs-dark-border); /* Thicker border for separation */
         }
 
         .table tbody tr {
-            border-top: 1px solid var(--bs-dark-border);
+            border-top: 1px solid var(--bs-dark-border); /* Lines between rows */
         }
 
         .table tbody tr:hover {
-            background-color: #1e1e1e; /* Slightly lighter shade for hover */
+            background-color: rgba(255, 193, 7, 0.2); /* Accent color on hover */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .table tbody td {
+            border-top: 1px solid var(--bs-dark-border); /* Subtle line above each cell */
         }
     </style>
 </head>

@@ -6,7 +6,7 @@ import COUNTRY_CODES from './country_codes.js';
 
 let globalApiResponseData = null; // Store API response globally
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     buildSearchableInput();
 
     const exportButton = document.querySelector('.csvDownload');
@@ -14,14 +14,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const refreshButton = document.getElementById('refreshBtn');
     const weightIntervalDropdown = document.getElementById('weightInterval');
 
+    // Helper function to fetch data and build table
+    const fetchAndBuildTable = async () => {
+        const response = await sendQuoteRequest();
+        if (response) {
+            globalApiResponseData = response.data || [];
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10); // Get current interval
+            buildShippingDataTable(globalApiResponseData, weightInterval); // Build table
+        } else {
+            console.error('Failed to fetch data from the API.');
+        }
+    };
+
     // Set dropdown to first value on page load
     if (COUNTRY_CODES.length > 0) {
         countryInput.value = COUNTRY_CODES[0].label; // Set the input to the first country's label
-        sendQuoteRequest().then(response => {
-            globalApiResponseData = response?.data || [];
-            const weightInterval = parseInt(weightIntervalDropdown.value, 10); // Get initial interval
-            buildShippingDataTable(globalApiResponseData, weightInterval); // Build the initial table
-        });
+        await fetchAndBuildTable(); // Fetch data and build table
     }
 
     // Trigger table rebuild on weight interval change
@@ -33,22 +41,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Send request on dropdown change
-    countryInput.addEventListener('change', () => {
-        sendQuoteRequest().then(response => {
-            globalApiResponseData = response?.data || [];
-            const weightInterval = parseInt(weightIntervalDropdown.value, 10); // Get current interval
-            buildShippingDataTable(globalApiResponseData, weightInterval); // Rebuild table
-        });
-    });
+    countryInput.addEventListener('change', fetchAndBuildTable);
 
     // Resend request on refresh button click
-    refreshButton.addEventListener('click', () => {
-        sendQuoteRequest().then(response => {
-            globalApiResponseData = response?.data || [];
-            const weightInterval = parseInt(weightIntervalDropdown.value, 10); // Get current interval
-            buildShippingDataTable(globalApiResponseData, weightInterval); // Rebuild table
-        });
-    });
+    refreshButton.addEventListener('click', fetchAndBuildTable);
 
     // Export table data to CSV
     if (exportButton) {

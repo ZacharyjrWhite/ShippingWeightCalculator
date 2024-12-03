@@ -10,7 +10,7 @@ async function sendQuoteRequest() {
 
     if (!countryCode) {
         console.error('Invalid country code or no country selected.');
-        return;
+        return null; // Return null if no valid country is selected
     }
 
     const url = "https://erp.ecommopsdev.com/nxt/quotePreview/data";
@@ -58,8 +58,11 @@ async function sendQuoteRequest() {
 
         // Populate the shippingLine dropdown
         populateShippingLineDropdown(data.columns);
+
+        return data; // Return the fetched data
     } catch (error) {
         console.error("Error sending request:", error);
+        return null; // Return null in case of an error
     } finally {
         showLoadingOverlay(false); // Hide loading overlay
     }

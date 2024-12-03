@@ -33,7 +33,7 @@ function buildShippingDataTable(data, weightInterval) {
         const to = (previousWeight + intervalInPounds).toFixed(4);
 
         // Get the rate dynamically based on the selected shipping line key
-        const rate = record[selectedKey] ? `$${record[selectedKey].toFixed(2)}` : 'N/A';
+        const rate = record[selectedKey] ? `$${Number(record[selectedKey]).toFixed(2)}` : 'N/A';
 
         // Create table row
         const row = document.createElement('tr');

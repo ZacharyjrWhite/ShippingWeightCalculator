@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const weightIntervalDropdown = document.getElementById('weightInterval');
     const shippingLineDropdown = document.getElementById('shippingLine');
     const roundUpCheckbox = document.getElementById('roundUp');
+    const profitAdditionInput = document.getElementById('profitAddition');
 
     // Helper function to fetch data and build table
     const fetchAndBuildTable = async () => {
@@ -52,6 +53,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Recalculate table on roundUp checkbox toggle
     roundUpCheckbox.addEventListener('change', () => {
+        if (globalApiResponseData) {
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10);
+            buildShippingDataTable(globalApiResponseData, weightInterval);
+        }
+    });
+
+    // Recalculate table on profitAddition input change
+    profitAdditionInput.addEventListener('input', () => {
         if (globalApiResponseData) {
             const weightInterval = parseInt(weightIntervalDropdown.value, 10);
             buildShippingDataTable(globalApiResponseData, weightInterval);

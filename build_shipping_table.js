@@ -37,9 +37,9 @@ function buildShippingDataTable(data, weightInterval) {
         const toGrams = (previousWeightGrams + weightInterval).toFixed(2);
 
         // Get the rate dynamically based on the selected shipping line key
-        const upChargeInput = document.getElementById('profitAddition').value;
-        const upCharge = upChargeInput > 0 ? upChargeInput : 0;
-        const rate = upCharge + record[selectedKey] ? `$${Number(record[selectedKey]).toFixed(2)}` : 'N/A';
+        const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
+        const baseRate = parseFloat(record[selectedKey]) || 0;
+        const rate = `$${(baseRate + upChargeInput).toFixed(2)}`;
 
         // Create table row
         const row = document.createElement('tr');

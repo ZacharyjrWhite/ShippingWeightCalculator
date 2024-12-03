@@ -63,9 +63,9 @@ function buildShippingDataTable(data, weightInterval) {
         row.innerHTML = `
             <td>${fromPounds} ${gramsDisplay}</td>
             <td>${toPounds} </td>
-            <td>$${rate.toFixed(2)}</td>
-            <td>$${baseRate.toFixed(2)}</td>
-            <td>$${Number(rate - baseRate).toFixed(2)}</td>
+            <td>${rate.toFixed(2)}</td>
+            <td>${baseRate.toFixed(2)}</td>
+            <td>${Number(rate - baseRate).toFixed(2)}</td>
         `;
 
         // Append row to the table body

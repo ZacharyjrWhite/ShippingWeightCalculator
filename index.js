@@ -1,1 +1,1 @@
-console.log(country_codes);
+console.log(COUNTRY_CODES);

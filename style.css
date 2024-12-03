@@ -91,6 +91,11 @@ input:focus::placeholder {
     border-top: 1px solid var(--bs-dark-border); /* Subtle line above each cell */
 }
 
+tbody tr:hover td, tbody tr:hover th {
+    background-color: var(--bs-yellow) !important;
+    color: var(--bs-dark-border) !important;
+}
+
 /* Rounded Table Styling for specific table */
 .shipping_data thead th:first-child {
     border-top-left-radius: 8px; /* Top-left corner */
@@ -166,7 +171,14 @@ a:hover {
     height: 3rem;
 }
 
-tbody tr:hover td, tbody tr:hover th {
-    background-color: var(--bs-yellow) !important;
-    color: var(--bs-dark-border) !important;
+/* Watermark Styling */
+.watermark {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
+    color: var(--bs-dark-text);
+    opacity: 0.5;
+    z-index: 1000;
+    pointer-events: none; /* Prevents interaction with the watermark */
 }

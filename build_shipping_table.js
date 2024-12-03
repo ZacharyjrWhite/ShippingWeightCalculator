@@ -1,9 +1,19 @@
 function buildShippingDataTable(data, weightInterval) {
     const tableBody = document.querySelector('.shipping_data tbody');
+    const shippingLineDropdown = document.getElementById('shippingLine');
+
     if (!tableBody) {
         console.error("Shipping data table body not found.");
         return;
     }
+
+    if (!shippingLineDropdown) {
+        console.error("Shipping Line dropdown (#shippingLine) not found.");
+        return;
+    }
+
+    // Get the selected key from the #shippingLine dropdown
+    const selectedKey = shippingLineDropdown.value;
 
     // Clear existing table rows
     tableBody.innerHTML = '';
@@ -22,14 +32,15 @@ function buildShippingDataTable(data, weightInterval) {
         const from = previousWeight.toFixed(4);
         const to = (previousWeight + intervalInPounds).toFixed(4);
 
+        // Get the rate dynamically based on the selected shipping line key
+        const rate = record[selectedKey] ? `$${record[selectedKey].toFixed(2)}` : 'N/A';
+
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${from} lbs</td>
             <td>${to} lbs</td>
-            <td>$${record.rate.toFixed(2)}</td>
-            <td>${record.actualCost ? `$${record.actualCost.toFixed(2)}` : ''}</td>
-            <td>${record.profit ? `$${record.profit.toFixed(2)}` : ''}</td>
+            <td>${rate}</td>
         `;
 
         // Append row to the table body

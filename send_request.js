@@ -1,5 +1,7 @@
 import COUNTRY_CODES from './country_codes.js';
 
+let apiResponseData = null; // Global variable to store API response data
+
 async function sendQuoteRequest() {
     const countryInput = document.getElementById('country');
     const countryCode = COUNTRY_CODES.find(
@@ -8,7 +10,6 @@ async function sendQuoteRequest() {
 
     if (!countryCode) {
         console.error('Invalid country code or no country selected.');
-        alert('Please select a valid country.');
         return;
     }
 
@@ -34,8 +35,10 @@ async function sendQuoteRequest() {
         countryCode,
         clientMid: "7d59185c-b629-4885-a5bc-df1296789d86",
         pageNum: 1,
-        pageSize: 2000
+        pageSize: 5000
     };
+
+    showLoadingOverlay(true); // Show loading overlay
 
     try {
         const response = await fetch(url, {
@@ -49,15 +52,16 @@ async function sendQuoteRequest() {
         }
 
         const data = await response.json();
+        apiResponseData = data; // Store response in the global variable
+
         console.log("Response Data:", data);
 
         // Populate the shippingLine dropdown
         populateShippingLineDropdown(data.columns);
-
-        alert("Request Successful! Shipping Line dropdown updated.");
     } catch (error) {
         console.error("Error sending request:", error);
-        alert("Request failed. Check console for details.");
+    } finally {
+        showLoadingOverlay(false); // Hide loading overlay
     }
 }
 
@@ -78,6 +82,14 @@ function populateShippingLineDropdown(columns) {
         option.value = column.field; // Set the underlying value
         shippingLineSelect.appendChild(option);
     });
+}
+
+// Loading overlay handling
+function showLoadingOverlay(show) {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+        overlay.style.display = show ? 'flex' : 'none';
+    }
 }
 
 export default sendQuoteRequest;

@@ -83,8 +83,8 @@ input:focus::placeholder {
 }
 
 .table tbody tr:hover {
-    background-color: rgba(255, 193, 7, 0.2); /* Accent color on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    background-color: rgba(255, 193, 7, 0.2) !important; /* Accent color on hover */
+    transition: background-color 0.3s ease !important; /* Smooth transition */
 }
 
 .table tbody td {

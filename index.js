@@ -67,6 +67,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    const showGramsCheckbox = document.getElementById('showGrams');
+    showGramsCheckbox.addEventListener('change', () => {
+        if (globalApiResponseData) {
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10);
+            buildShippingDataTable(globalApiResponseData, weightInterval);
+        }
+    });
+    
     // Send request on country change
     countryInput.addEventListener('change', fetchAndBuildTable);
 

@@ -2,6 +2,7 @@ function buildShippingDataTable(data, weightInterval) {
     const tableBody = document.querySelector('.shipping_data tbody');
     const shippingLineDropdown = document.getElementById('shippingLine');
     const roundUpCheckbox = document.getElementById('roundUp');
+    const showGramsCheckbox = document.getElementById('showGrams');
 
     if (!tableBody) {
         console.error("Shipping data table body not found.");
@@ -52,11 +53,16 @@ function buildShippingDataTable(data, weightInterval) {
             }
         }
 
+        // Determine whether to show grams based on the checkbox
+        const gramsDisplay = showGramsCheckbox.checked
+            ? ` (${fromGrams} g to ${toGrams} g)`
+            : '';
+
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${fromPounds} lbs (${fromGrams} g)</td>
-            <td>${toPounds} lbs (${toGrams} g)</td>
+            <td>${fromPounds} lbs${gramsDisplay}</td>
+            <td>${toPounds} lbs</td>
             <td>$${rate.toFixed(2)}</td>
             <td>$${baseRate.toFixed(2)}</td>
             <td>$${Number(rate - baseRate).toFixed(2)}</td>

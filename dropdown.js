@@ -9,6 +9,12 @@ function buildSearchableInput() {
         return;
     }
 
+    // Adjust dropdown width to match input
+    function adjustDropdownWidth() {
+        const inputWidth = countryInput.offsetWidth;
+        countryList.style.width = `${inputWidth}px`;
+    }
+
     // Function to populate the dropdown with all countries initially
     function populateDropdown() {
         countryList.innerHTML = '';
@@ -63,6 +69,7 @@ function buildSearchableInput() {
 
     // Populate dropdown with all countries on focus
     countryInput.addEventListener('focus', () => {
+        adjustDropdownWidth();
         populateDropdown();
     });
 
@@ -70,6 +77,9 @@ function buildSearchableInput() {
     countryInput.addEventListener('input', (e) => {
         updateDropdown(e.target.value);
     });
+
+    // Adjust dropdown width dynamically
+    window.addEventListener('resize', adjustDropdownWidth);
 
     // Hide dropdown when clicking outside
     document.addEventListener('click', (e) => {

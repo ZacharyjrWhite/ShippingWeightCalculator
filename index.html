@@ -27,11 +27,31 @@
         .btn-primary:hover {
             background-color: #185abc;
         }
-
         input:focus {
             outline: none !important;
-            border:1px solid var(--bs-yellow);
+            border: 1px solid var(--bs-yellow);
             box-shadow: 0 0 10px var(--bs-yellow);
+        }
+        /* Dropdown Styling */
+        #countryList {
+            overflow-y: auto;
+            border: 1px solid #444;
+            max-height: 200px;
+            scrollbar-width: thin;
+            scrollbar-color: #555 #121212;
+        }
+        #countryList::-webkit-scrollbar {
+            width: 8px;
+        }
+        #countryList::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        #countryList::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        #countryList::-webkit-scrollbar-thumb:hover {
+            background: #777;
         }
     </style>
 </head>

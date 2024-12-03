@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const countryInput = document.getElementById('country');
     const refreshButton = document.getElementById('refreshBtn');
     const weightIntervalDropdown = document.getElementById('weightInterval');
+    const shippingLineDropdown = document.getElementById('shippingLine');
+    const roundUpCheckbox = document.getElementById('roundUp');
 
     // Helper function to fetch data and build table
     const fetchAndBuildTable = async () => {
@@ -32,15 +34,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         await fetchAndBuildTable(); // Fetch data and build table
     }
 
-    // Trigger table rebuild on weight interval change
+    // Recalculate table on weight interval change
     weightIntervalDropdown.addEventListener('change', () => {
         if (globalApiResponseData) {
-            const weightInterval = parseInt(weightIntervalDropdown.value, 10); // Get new interval
-            buildShippingDataTable(globalApiResponseData, weightInterval); // Rebuild table
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10);
+            buildShippingDataTable(globalApiResponseData, weightInterval);
         }
     });
 
-    // Send request on dropdown change
+    // Recalculate table on shipping line change
+    shippingLineDropdown.addEventListener('change', () => {
+        if (globalApiResponseData) {
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10);
+            buildShippingDataTable(globalApiResponseData, weightInterval);
+        }
+    });
+
+    // Recalculate table on roundUp checkbox toggle
+    roundUpCheckbox.addEventListener('change', () => {
+        if (globalApiResponseData) {
+            const weightInterval = parseInt(weightIntervalDropdown.value, 10);
+            buildShippingDataTable(globalApiResponseData, weightInterval);
+        }
+    });
+
+    // Send request on country change
     countryInput.addEventListener('change', fetchAndBuildTable);
 
     // Resend request on refresh button click

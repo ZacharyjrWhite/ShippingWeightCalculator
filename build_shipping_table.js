@@ -1,6 +1,7 @@
 function buildShippingDataTable(data, weightInterval) {
     const tableBody = document.querySelector('.shipping_data tbody');
     const shippingLineDropdown = document.getElementById('shippingLine');
+    const roundUpCheckbox = document.getElementById('roundUp');
 
     if (!tableBody) {
         console.error("Shipping data table body not found.");
@@ -39,14 +40,20 @@ function buildShippingDataTable(data, weightInterval) {
         // Get the rate dynamically based on the selected shipping line key
         const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
         const baseRate = parseFloat(record[selectedKey]) || 0;
-        const rate = `$${(baseRate + upChargeInput).toFixed(2)}`;
+        let rate = baseRate + upChargeInput;
+
+        // Apply rounding if the roundUp checkbox is checked
+        if (roundUpCheckbox.checked) {
+            rate = Math.round(rate * 2) / 2; // Round to nearest 0.50
+            rate = rate - Math.floor(rate) === 0.49 ? Math.round(rate) - 0.01 : rate; // Adjust to nearest 0.49 or 0.99
+        }
 
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${fromPounds} lbs (${fromGrams} g)</td>
             <td>${toPounds} lbs (${toGrams} g)</td>
-            <td>${rate}</td>
+            <td>$${rate.toFixed(2)}</td>
         `;
 
         // Append row to the table body

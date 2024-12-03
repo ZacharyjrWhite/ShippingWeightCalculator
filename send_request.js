@@ -71,8 +71,8 @@ function populateShippingLineDropdown(columns) {
     // Clear existing options
     shippingLineSelect.innerHTML = '';
 
-    // Add new options from API response
-    columns.forEach(column => {
+    // Add new options from API response, skipping the first two indices
+    columns.slice(2).forEach(column => {
         const option = document.createElement('option');
         option.textContent = column.title; // Set the visible text
         option.value = column.field; // Set the underlying value

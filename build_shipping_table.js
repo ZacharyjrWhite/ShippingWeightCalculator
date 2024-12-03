@@ -61,8 +61,8 @@ function buildShippingDataTable(data, weightInterval) {
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${fromPounds} lbs${gramsDisplay}</td>
-            <td>${toPounds} lbs</td>
+            <td>${fromPounds} ${gramsDisplay}</td>
+            <td>${toPounds} </td>
             <td>$${rate.toFixed(2)}</td>
             <td>$${baseRate.toFixed(2)}</td>
             <td>$${Number(rate - baseRate).toFixed(2)}</td>

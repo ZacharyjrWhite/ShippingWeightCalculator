@@ -134,11 +134,16 @@
 
         <!-- Controls -->
         <div class="row g-3">
-            <div class="col-md-3">
-                <label for="country" class="form-label">Country:</label>
-                <input type="text" class="form-control bg-dark text-light" id="country" placeholder="Search or select a country">
-                <ul class="list-group position-absolute d-none bg-dark text-light" id="countryList" style="z-index: 1000; max-height: 200px; overflow-y: auto;">
-                </ul>
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="country" class="form-label">Country:</label>
+                    <input type="text" class="form-control bg-dark text-light" id="country" placeholder="Search or select a country">
+                    <ul class="list-group position-absolute d-none bg-dark text-light w-100" id="countryList" style="z-index: 1000; max-height: 200px; overflow-y: auto;">
+                    </ul>
+                </div>
+                <div class="col-md-3 align-self-end">
+                    <button id="refreshBtn" class="btn btn-primary w-100">Refresh</button>
+                </div>
             </div>
             <div class="col-md-3">
                 <label for="weightInterval" class="form-label">Weight Interval:</label>

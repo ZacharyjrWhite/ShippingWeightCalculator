@@ -27,66 +27,65 @@ function buildShippingDataTable(data, weightInterval) {
     const sortedData = data.sort((a, b) => a.weight - b.weight);
 
     let previousWeightPounds = 0; // Starting weight in pounds
-    let previousWeightGrams = 50; // Starting weight in grams
+    let previousWeightGrams = 0; // Start from 0g to ensure 0-50g is handled
     let currentBracketRecords = [];
 
-    for (const record of sortedData) {
-        const weightInGrams = record.weight;
-        const weightInPounds = weightInGrams / 453.592;
+    // Handle the 0–50g bucket explicitly
+    let highestRate = 0;
+    while (sortedData.length > 0 && sortedData[0].weight <= 50) {
+        const record = sortedData.shift();
+        const rate = parseFloat(record[selectedKey]) || 0;
+        highestRate = Math.max(highestRate, rate);
+    }
 
-        // Check if the record is within the current weight bracket
-        if (weightInGrams <= previousWeightGrams + weightInterval) {
-            currentBracketRecords.push(record);
+    const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
+    let rate = highestRate + upChargeInput;
+
+    // Apply rounding if the roundUp checkbox is checked
+    if (roundUpCheckbox.checked) {
+        const decimalPart = rate - Math.floor(rate); // Get the fractional part
+        if (decimalPart <= 0.49) {
+            rate = Math.floor(rate) + 0.49; // Round up to .49
         } else {
-            // Process the current bracket
-            if (currentBracketRecords.length > 0) {
-                const highestRecord = currentBracketRecords[currentBracketRecords.length - 1];
-                const highestRate = parseFloat(highestRecord[selectedKey]) || 0;
-                const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
-                let rate = highestRate + upChargeInput;
-
-                // Apply rounding if the roundUp checkbox is checked
-                if (roundUpCheckbox.checked) {
-                    const decimalPart = rate - Math.floor(rate); // Get the fractional part
-                    if (decimalPart <= 0.49) {
-                        rate = Math.floor(rate) + 0.49; // Round up to .49
-                    } else {
-                        rate = Math.floor(rate) + 0.99; // Round up to .99
-                    }
-                }
-
-                // Determine whether to show grams based on the checkbox
-                const gramsDisplay = showGramsCheckbox.checked
-                    ? ` (${previousWeightGrams.toFixed(2)} g to ${(previousWeightGrams + weightInterval).toFixed(2)} g)`
-                    : '';
-
-                // Create table row
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${previousWeightPounds.toFixed(4)} lbs${gramsDisplay}</td>
-                    <td>${(previousWeightPounds + intervalInPounds).toFixed(4)} lbs</td>
-                    <td>$${rate.toFixed(2)}</td>
-                    <td>$${highestRate.toFixed(2)}</td>
-                    <td>$${Number(rate - highestRate).toFixed(2)}</td>
-                `;
-
-                // Append row to the table body
-                tableBody.appendChild(row);
-
-                // Update for the next bracket
-                previousWeightPounds += intervalInPounds + 0.0001; // Increment pounds
-                previousWeightGrams += weightInterval; // Increment grams
-                currentBracketRecords = [record]; // Start a new bracket
-            }
+            rate = Math.floor(rate) + 0.99; // Round up to .99
         }
     }
 
-    // Handle the last bracket if any records remain
-    if (currentBracketRecords.length > 0) {
-        const highestRecord = currentBracketRecords[currentBracketRecords.length - 1];
-        const highestRate = parseFloat(highestRecord[selectedKey]) || 0;
-        const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
-        let rate = highestRate + upChargeInput;
+    // Determine whether to show grams based on the checkbox
+    const gramsDisplay = showGramsCheckbox.checked
+        ? ` (${previousWeightGrams.toFixed(2)} g to ${(previousWeightGrams + 50).toFixed(2)} g)`
+        : '';
+
+    // Create table row for 0–50g
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${previousWeightPounds.toFixed(4)} lbs${gramsDisplay}</td>
+        <td>${(50 / 453.592).toFixed(4)} lbs</td>
+        <td>$${rate.toFixed(2)}</td>
+        <td>$${highestRate.toFixed(2)}</td>
+        <td>$${Number(rate - highestRate).toFixed(2)}</td>
+    `;
+    tableBody.appendChild(row);
+
+    // Update for the next bracket
+    previousWeightPounds = 50 / 453.592; // Move to 50g in pounds
+    previousWeightGrams = 50;
+
+    // Process remaining data in brackets
+    while (previousWeightGrams <= Math.max(...data.map(d => d.weight), previousWeightGrams)) {
+        highestRate = 0;
+        while (
+            currentBracketRecords.length === 0 ||
+            (sortedData.length > 0 && sortedData[0].weight <= previousWeightGrams + weightInterval)
+        ) {
+            const record = sortedData.shift();
+            if (!record) break;
+
+            const rate = parseFloat(record[selectedKey]) || 0;
+            highestRate = Math.max(highestRate, rate);
+        }
+
+        rate = highestRate + upChargeInput;
 
         // Apply rounding if the roundUp checkbox is checked
         if (roundUpCheckbox.checked) {
@@ -110,7 +109,12 @@ function buildShippingDataTable(data, weightInterval) {
             <td>$${highestRate.toFixed(2)}</td>
             <td>$${Number(rate - highestRate).toFixed(2)}</td>
         `;
+
         tableBody.appendChild(row);
+
+        // Update for the next bracket
+        previousWeightGrams += weightInterval;
+        previousWeightPounds += intervalInPounds;
     }
 }
 

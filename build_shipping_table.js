@@ -67,11 +67,11 @@ function buildShippingDataTable(data, weightInterval) {
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${previousWeightPounds.toFixed(4)} lbs${gramsDisplay}</td>
-            <td>${(previousWeightPounds + intervalInPounds).toFixed(4)} lbs</td>
-            <td>$${rate.toFixed(2)}</td>
-            <td>$${highestRate.toFixed(2)}</td>
-            <td>$${Number(rate - highestRate).toFixed(2)}</td>
+            <td>${previousWeightPounds.toFixed(4)} ${gramsDisplay}</td>
+            <td>${(previousWeightPounds + intervalInPounds).toFixed(4)}</td>
+            <td>${rate.toFixed(2)}</td>
+            <td>${highestRate.toFixed(2)}</td>
+            <td>${Number(rate - highestRate).toFixed(2)}</td>
         `;
 
         // Append row to the table body

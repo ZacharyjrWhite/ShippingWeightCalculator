@@ -26,7 +26,7 @@ function buildShippingDataTable(data, weightInterval) {
     // Sort data by weight (just in case the response isn't sorted)
     const sortedData = data.sort((a, b) => a.weight - b.weight);
 
-    let previousWeightGrams = 50; // Start from 50g minimum
+    let previousWeightGrams = 0; // Start from 50g minimum
     let previousWeightPounds = previousWeightGrams / 453.592; // Convert to pounds
     let dataIndex = 0;
 

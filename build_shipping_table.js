@@ -26,13 +26,14 @@ function buildShippingDataTable(data, weightInterval) {
     // Sort data by weight (just in case the response isn't sorted)
     const sortedData = data.sort((a, b) => a.weight - b.weight);
 
-    let previousWeightGrams = 0; // Start from 50g minimum
-    let previousWeightPounds = previousWeightGrams / 453.592; // Convert to pounds
+    let previousWeightGrams = 0; // Start from 0g
+    let previousWeightPounds = 0; // Start from 0 lbs
     let dataIndex = 0;
 
     // Process data in weight brackets
-    while (previousWeightGrams <= Math.max(...data.map(d => d.weight), previousWeightGrams)) {
-        // Find all records within the current bracket
+    const maxWeight = Math.max(...data.map(d => d.weight), 0); // Maximum weight in the data
+    while (previousWeightGrams <= maxWeight || dataIndex < sortedData.length) {
+        // Find the highest rate in the current bracket
         let highestRate = 0;
         while (
             dataIndex < sortedData.length &&

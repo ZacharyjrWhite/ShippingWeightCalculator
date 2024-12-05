@@ -27,7 +27,7 @@ function buildShippingDataTable(data, weightInterval) {
     const sortedData = data.sort((a, b) => a.weight - b.weight);
 
     let previousWeightPounds = 0; // Starting weight in pounds
-    let previousWeightGrams = 0; // Starting weight in grams
+    let previousWeightGrams = 50; // Starting weight in grams
     let currentBracketRecords = [];
 
     for (const record of sortedData) {

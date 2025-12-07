@@ -66,8 +66,10 @@ function buildShippingDataTable(data, weightInterval) {
             const decimalPart = rate - Math.floor(rate); // Get the fractional part
             if (decimalPart <= 0.49) {
                 rate = Math.floor(rate) + 0.49; // Round up to .49
+                highestRate = Math.floor(highestRate) + 0.49; // Round up to .49
             } else {
                 rate = Math.floor(rate) + 0.99; // Round up to .99
+                highestRate = Math.floor(highestRate) + 0.99; // Round up to .99
             }
         }
 

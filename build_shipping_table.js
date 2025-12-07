@@ -103,6 +103,7 @@ function buildShippingDataTable(data, weightInterval) {
             <td style="display: none;"></td>
             <td style="display: none;">y</td>
             <td style="display: none;"></td>
+            <td style="display: none;"></td>
         `;
 
         // Append row to the table body

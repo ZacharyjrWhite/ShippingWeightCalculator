@@ -1,12 +1,16 @@
-import buildSearchableInput from './dropdown.js';
-import exportTableToCSV from './export_csv.js';
-import sendQuoteRequest from './send_request.js';
-import buildShippingDataTable from './build_shipping_table.js';
-import COUNTRY_CODES from './country_codes.js';
+// Prevent caching for module imports
+const cacheBuster = '?v=' + Date.now();
 
 let globalApiResponseData = null; // Store API response globally
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Dynamic imports with cache-busting
+    const { default: buildSearchableInput } = await import('./dropdown.js' + cacheBuster);
+    const { default: exportTableToCSV } = await import('./export_csv.js' + cacheBuster);
+    const { default: sendQuoteRequest } = await import('./send_request.js' + cacheBuster);
+    const { default: buildShippingDataTable } = await import('./build_shipping_table.js' + cacheBuster);
+    const { default: COUNTRY_CODES } = await import('./country_codes.js' + cacheBuster);
+    
     buildSearchableInput();
 
     const exportButton = document.querySelector('.csvDownload');
@@ -30,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // Set dropdown to first value on page load
-    if (COUNTRY_CODES.length > 0) {
+    if (COUNTRY_CODES && COUNTRY_CODES.length > 0) {
         countryInput.value = COUNTRY_CODES[0].label; // Set the input to the first country's label
         await fetchAndBuildTable(); // Fetch data and build table
     }

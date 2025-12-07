@@ -22,7 +22,7 @@ async function sendQuoteRequest() {
         "origin": "https://erp.ecommopsdev.com",
         "pragma": "no-cache",
         "priority": "u=1, i",
-        "referer": "https://erp.ecommopsdev.com/nxt/quotePreview/page?clientMid=7d59185c-b629-4885-a5bc-df1296789d86",
+        "referer": "https://erp.ecommopsdev.com/nxt/quotePreview/page?clientMid=8bb12bf6-967b-43b0-8506-501ea687a80a",
         "sec-ch-ua": `"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"`,
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": `"Windows"`,
@@ -33,7 +33,7 @@ async function sendQuoteRequest() {
     };
     const payload = {
         countryCode,
-        clientMid: "7d59185c-b629-4885-a5bc-df1296789d86",
+        clientMid: "8bb12bf6-967b-43b0-8506-501ea687a80a",
         pageNum: 1,
         pageSize: 5000
     };

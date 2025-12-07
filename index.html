@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-3">
                 <label for="profitAddition" class="form-label">Profit Addition:</label>
-                <input type="number" class="form-control bg-dark text-light" id="profitAddition" value="3">
+                <input type="number" class="form-control bg-dark text-light" id="profitAddition" value="0">
             </div>
             <div class="col-md-3">
                 <label for="shippingLine" class="form-label">Shipping Line:</label>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-check mt-4">
-            <input class="form-check-input" type="checkbox" id="roundUp">
+            <input class="form-check-input" type="checkbox" id="roundUp" checked>
             <label class="form-check-label" for="roundUp">Round up to nearest .49 / .99?</label>
         </div>
         <div class="form-check mt-4">
@@ -64,11 +64,24 @@
             <table class="table table-dark table-bordered text-center shipping_data">
                 <thead>
                     <tr>
-                        <th>From (lb)</th>
-                        <th>Up to and equal (lb)</th>
-                        <th>Rate</th>
-                        <th>Actual Cost</th>
-                        <th>Our Profit</th>
+                        <th style="display: none;">name</th>
+                        <th style="display: none;">code</th>
+                        <th style="display: none;">desc (max 100chr)</th>
+                        <th style="display: none;">country</th>
+                        <th style="display: none;">province</th>
+                        <th style="display: none;">postcode start</th>
+                        <th style="display: none;">postcode end</th>
+                        <th>weight start</th>
+                        <th>weight end</th>
+                        <th style="display: none;">price start</th>
+                        <th style="display: none;">price end</th>
+                        <th style="display: none;">qty start</th>
+                        <th style="display: none;">qty end</th>
+                        <th>Base Rate</th>
+                        <th style="display: none;">fixed rate per product</th>
+                        <th style="display: none;">price per kg/lb</th>
+                        <th style="display: none;">stop on match</th>
+                        <th style="display: none;">use package weight</th>
                     </tr>
                 </thead>
                 <tbody>

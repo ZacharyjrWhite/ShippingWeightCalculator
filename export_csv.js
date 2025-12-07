@@ -8,11 +8,15 @@ function exportTableToCSV() {
     // Get current date in YYYY-MM-DD format
     const currentDate = new Date().toISOString().slice(0, 10);
 
-    // Prepare the filename
-    const fileName = `Shipping_export_${currentDate}.csv`;
-
     // Extract table rows
     const rows = Array.from(table.rows);
+
+    const countryCode = rows[1].cells[3].innerText.trim();
+
+    // Prepare the filename
+    const fileName = `${countryCode}_Shipping_export_${currentDate}.csv`;
+
+
 
     // Convert rows to CSV
     const csvContent = rows

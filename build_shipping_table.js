@@ -35,6 +35,7 @@ function buildShippingDataTable(data, weightInterval) {
     while (previousWeightGrams <= maxWeight || dataIndex < sortedData.length) {
         // Find the highest rate in the current bracket
         let highestRate = 0;
+        let lastRecord = null; // Track the last record processed in this bracket
         while (
             dataIndex < sortedData.length &&
             sortedData[dataIndex].weight <= previousWeightGrams + weightInterval
@@ -42,12 +43,23 @@ function buildShippingDataTable(data, weightInterval) {
             const record = sortedData[dataIndex];
             const rate = parseFloat(record[selectedKey]) || 0;
             highestRate = Math.max(highestRate, rate);
+            lastRecord = record; // Keep track of the last record
             dataIndex++;
         }
 
         // Calculate the final rate with the upcharge
         const upChargeInput = parseFloat(document.getElementById('profitAddition').value.replace('$', '')) || 0;
         let rate = highestRate + upChargeInput;
+
+        // Get countryCode from the last record processed, or skip if no records in this bracket
+        if (!lastRecord || !lastRecord.countryCode) {
+            // Move to the next bracket if no valid record found
+            previousWeightGrams += weightInterval;
+            previousWeightPounds = previousWeightGrams / 453.592;
+            continue;
+        }
+        
+        let countryCode = lastRecord.countryCode;
 
         // Apply rounding if the roundUp checkbox is checked
         if (roundUpCheckbox.checked) {
@@ -67,11 +79,28 @@ function buildShippingDataTable(data, weightInterval) {
         // Create table row
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td>${previousWeightPounds.toFixed(4)} ${gramsDisplay}</td>
+            <td style="display: none;">Standard Shipping</td>
+            <td style="display: none;"></td>
+            <td style="display: none;">Once your order ships it will be delivered within 7-15 business days. *Please note, delivery to certain regions may require 10-30 business days.</td>
+            <td style="display: none;">${countryCode}</td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+
+            <td>${previousWeightPounds.toFixed(4)}</td>
             <td>${(previousWeightPounds + intervalInPounds).toFixed(4)}</td>
-            <td>${rate.toFixed(2)}</td>
+
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+
             <td>${highestRate.toFixed(2)}</td>
-            <td>${Number(rate - highestRate).toFixed(2)}</td>
+
+            <td style="display: none;"></td>
+            <td style="display: none;"></td>
+            <td style="display: none;">y</td>
+            <td style="display: none;"></td>
         `;
 
         // Append row to the table body
